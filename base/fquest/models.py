@@ -124,7 +124,7 @@ class Character(db.Model, BaseMixin):
         )
         db.session.add(event)
 
-        from celery import publish
+        from .celery import publish
         publish.delay(self.facebook_token, url_for('fquest.character', facebook_id=self.facebook_id))
 
     def fight(self, monster):
@@ -270,7 +270,7 @@ class Event(db.Model, BaseMixin):
             feed = graph.get(uri)
             assert 'data' in feed and feed['data']
 
-            for info in feed['data']:
+            for _ in feed['data']:
                 cls.fight(character)
 
             character.facebook_synced = datetime.now()
