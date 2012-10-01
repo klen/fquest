@@ -1,4 +1,4 @@
-from ..core.models import BaseMixin, db
+from ..core.models import BaseMixin, db, datetime
 
 
 class Inventory(db.Model):
@@ -63,6 +63,7 @@ class Character(db.Model, BaseMixin):
     user = db.relationship('User', backref=db.backref('characters', lazy='dynamic'))
 
     facebook_id = db.Column(db.String, nullable=False)
+    facebook_synced = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def __unicode__(self):
         return self.name
