@@ -24,3 +24,6 @@ class TestCase(FlaskTest):
 
         stuff = Stuff.query.order_by(func.random()).first()
         self.assertTrue(stuff)
+
+    def test_character(self):
+        pass

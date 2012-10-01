@@ -1,5 +1,7 @@
-from ..core.models import BaseMixin, db, datetime
 from sqlalchemy.ext.declarative import declared_attr
+
+from . import config
+from ..core.models import BaseMixin, db, datetime
 
 
 class Inventory(db.Model):
@@ -76,6 +78,11 @@ class Character(db.Model, BaseMixin):
     def inventory(self):
         assert self
         return db.relationship("Stuff", secondary='fquest_inventory', backref="characters")
+
+    def role(self):
+        assert [self.strenght, self.dexterity, self.intellect, self.luck] == [15, 15, 15, 15]
+        gen = config.CLASS_FABRIC_GEN[self.cls]
+        self.strenght, self.dexterity, self.intellect, self.luck = map(lambda x: x(), gen)
 
 
 class Monster(db.Model, BaseMixin):
