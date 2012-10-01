@@ -30,7 +30,8 @@ def authenticated(func):
 def index():
     " Facebook Quest Main page. "
 
-    top = Character.query.order_by(Character.exp.desc()).limit(10).all(),
+    top = Character.query.order_by(Character.exp.desc()).limit(10)
+    import ipdb; ipdb.set_trace() ### XXX BREAKPOINT
 
     return render_template('fquest/index.html', top=top)
 

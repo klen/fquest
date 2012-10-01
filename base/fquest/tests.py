@@ -107,3 +107,6 @@ class TestCase(FlaskTest):
 
         character = Character.query.order_by(Character.facebook_synced.desc()).first()
         self.assertTrue(character.facebook_synced > last_update2)
+
+    def test_index(self):
+        self.assert200(self.client.get('/'))
