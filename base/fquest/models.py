@@ -102,6 +102,10 @@ class Character(db.Model, BaseMixin):
         while config.LEVELS[self.level] <= self.exp:
             self.levelup()
 
+    def progress(self):
+        diff = config.LEVELS[self.level + 1] - self.exp
+        return int((config.LEVELS[self.level + 1] - config.LEVELS[self.level]) * 1.0 / diff * 100)
+
     def levelup(self):
         self.level += 1
 
