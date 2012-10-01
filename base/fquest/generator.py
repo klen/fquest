@@ -3,6 +3,7 @@ from itertools import product
 from random import randrange, randint
 from .models import Monster, db, Stuff
 from sqlalchemy.exc import IntegrityError, DataError
+from flask import current_app
 
 MONSTER_NAMES = (
     ('Bear', 'Boar', 'Cougar', 'Cat', 'Devilsaurs', 'Dragonhawk', 'Gryphon', 'Raptor', 'Spider', 'Wolve'),
@@ -62,6 +63,7 @@ def GEN_MONSTERS(num=600, max_level=100):
         try:
             db.session.add(monster)
             db.session.commit()
+            current_app.logger.debug(str(monster))
         except (IntegrityError, DataError):
             db.session.rollback()
 
@@ -87,5 +89,6 @@ def GEN_STUFF(num=600, max_level=100):
         try:
             db.session.add(stuff)
             db.session.commit()
+            current_app.logger.debug(str(stuff))
         except (IntegrityError, DataError):
             db.session.rollback()
