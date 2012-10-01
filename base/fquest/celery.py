@@ -32,8 +32,10 @@ def beat():
     " FQuest beat. "
 
     from .models import Character
+    from ..ext import cache
+
+    last_synced = cache.get()
     character = Character.query.order_by(Character.facebook_synced.desc()).first()
-    import ipdb; ipdb.set_trace() ### XXX BREAKPOINT
 
 
 # pymode:lint_ignore=E061

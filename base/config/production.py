@@ -41,6 +41,7 @@ BEAT_SCHEDULE = timedelta(minutes=1)
 if op.exists('/var/www/smtp'):
     with open('/var/www/smtp') as f:
         MAIL_USERNAME, MAIL_PASSWORD = f.read().split(' ')
+    ADMINS = [MAIL_USERNAME]
 
 
 # pymode:lint_ignore=W0614,W404
