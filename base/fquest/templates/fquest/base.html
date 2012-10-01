@@ -7,11 +7,14 @@
 
 {%- block meta -%}
     {{ super() }}
-    <meta property="fb:app_id" content="{{ config.get('OAUTH_FACEBOOK').get('consumer_key') }}">
-    <meta property="og:url" content="{{ request.base_url }}"> 
-    <meta property="og:title" content="{{ title or _('ZeroQuest') }}"> 
-    <meta property="og:image" content="{{ url_for('fquest.static', filename='fquest.png') }}">
-    <meta property="og:description" content="{{ _('Lazy Facebook RPG') }}"/>
+
+    {% block graph_info %}
+        <meta property="fb:app_id" content="{{ config.get('OAUTH_FACEBOOK').get('consumer_key') }}">
+        <meta property="og:url" content="{{ request.base_url }}"> 
+        <meta property="og:title" content="{{ title or _('ZeroQuest') }}"> 
+        <meta property="og:image" content="{{ url_for('fquest.static', filename='fquest.png') }}">
+        <meta property="og:description" content="{{ _('Lazy Facebook RPG') }}"/>
+    {% endblock %}
 {% endblock %}
 
 {% block style %}
