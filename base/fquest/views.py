@@ -30,7 +30,9 @@ def authenticated(func):
 def index():
     " Facebook Quest Main page. "
 
-    return render_template('fquest/index.html')
+    top = Character.query.order_by(Character.exp.desc()).limit(10).all(),
+
+    return render_template('fquest/index.html', top)
 
 
 @fquest.route('/profile/')
