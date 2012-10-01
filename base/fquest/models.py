@@ -269,10 +269,11 @@ class Event(db.Model, BaseMixin):
             current_app.logger.info('Call API: %s' % uri)
             feed = graph.get(uri)
             assert 'data' in feed and feed['data']
+
+            for info in feed['data']:
+                cls.fight(character)
+
+            character.facebook_synced = datetime.now()
+
         except (FacepyError, AssertionError), e:
             current_app.logger.error(e)
-
-        for info in feed['data']:
-            cls.fight(character)
-
-        character.facebook_synced = datetime.now()
