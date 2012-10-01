@@ -268,7 +268,7 @@ class Event(db.Model, BaseMixin):
         try:
             current_app.logger.info('Call API: %s' % uri)
             feed = graph.get(uri)
-            assert 'data' in feed, "Wrong response"
+            assert 'data' in feed, ("Response: %s" % str(feed))
             if not feed.get('data'):
                 return False
 
@@ -279,4 +279,4 @@ class Event(db.Model, BaseMixin):
             return True
 
         except (FacepyError, AssertionError), e:
-            current_app.logger.error(e)
+            current_app.logger.error(str(e))
