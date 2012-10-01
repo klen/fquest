@@ -41,7 +41,7 @@ DEBUG=True
 
 if op.exists('/var/www/smtp'):
     with open('/var/www/smtp') as f:
-        MAIL_USERNAME, MAIL_PASSWORD = f.read().split(' ')
+        MAIL_USERNAME, MAIL_PASSWORD = f.read().strip().split(' ')
     ADMINS = [MAIL_USERNAME]
 
 
