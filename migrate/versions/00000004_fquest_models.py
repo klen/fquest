@@ -16,6 +16,19 @@ from datetime import datetime
 
 
 def upgrade():
+
+    op.create_table(
+        'fquest_guild',
+
+        db.Column('id', db.Integer, primary_key=True),
+        db.Column('created_at', db.DateTime,
+                  default=datetime.utcnow, nullable=False),
+        db.Column('updated_at', db.DateTime,
+                  onupdate=datetime.utcnow, default=datetime.utcnow),
+
+        db.Column('name', db.String, nullable=False),
+    )
+
     op.create_table(
         'fquest_character',
 
@@ -79,18 +92,6 @@ def upgrade():
         db.Column('name', db.String, nullable=False),
         db.Column('level', db.Integer, default=0, nullable=False),
         db.Column('mode', db.SmallInteger, default=0, nullable=False),
-    )
-
-    op.create_table(
-        'fquest_guild',
-
-        db.Column('id', db.Integer, primary_key=True),
-        db.Column('created_at', db.DateTime,
-                  default=datetime.utcnow, nullable=False),
-        db.Column('updated_at', db.DateTime,
-                  onupdate=datetime.utcnow, default=datetime.utcnow),
-
-        db.Column('name', db.String, nullable=False),
     )
 
     op.create_table(
