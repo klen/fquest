@@ -180,7 +180,7 @@ class Monster(db.Model, BaseMixin):
         """ Character has loot fom this monster.
         """
         skill = max(1, 3 + (character.level - self.level))
-        exp = randint(self.level * (5 - skill), self.level * (7 - skill))
+        exp = randint(self.level * (7 - skill), self.level * (9 - skill))
         gold = randint(0, randint(self.level * (5 - skill), self.level * (7 - skill)) / 2)
         return exp, gold
 
