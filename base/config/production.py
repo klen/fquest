@@ -11,21 +11,16 @@ ADMINS = frozenset([MAIL_USERNAME])
 # -----------------
 COLLECT_STATIC_ROOT = op.join(op.dirname(ROOTDIR), 'static')
 
-# auth.oauth
+# FQUEST settings
 # ----------
-OAUTH_TWITTER = dict(
-    consumer_key='750sRyKzvdGPJjPd96yfgw',
-    consumer_secret='UGcyjDCUOb1q44w1nUk8FA7aXxvwwj1BCbiFvYYI',
-)
-
+AUTH_LOGIN_VIEW = 'fquest.index'
+AUTH_PROFILE_VIEW = 'fquest.profile'
 OAUTH_FACEBOOK = dict(
-    consumer_key='413457268707622',
-    consumer_secret='48e9be9f4e8abccd3fb916a3f646dd3f',
-)
-
-OAUTH_GITHUB = dict(
-    consumer_key='8bdb217c5df1c20fe632',
-    consumer_secret='a3aa972b2e66e3fac488b4544d55eda2aa2768b6',
+    consumer_key='365449256868307',
+    consumer_secret='899b2ea26ca77122eef981f4712aeb04',
+    params=dict(
+        scope="user_status,user_likes,user_activities,user_questions,user_events,user_videos,user_groups,user_relationships,user_notes,user_photos,offline_access,publish_actions"
+    )
 )
 
 # dealer
