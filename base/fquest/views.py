@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, url_for, render_template, request
 from flask_login import current_user
 from functools import wraps
+from .forms import CharacterCreateForm
+from .models import Character, db
 
 
 fquest = Blueprint(
@@ -47,8 +49,24 @@ def edit():
 @fquest.route('/profile/create/', methods=['GET', 'POST'])
 @authenticated
 def create():
+    if current_user.characters.count():
+        return redirect(url_for('fquest.profile'))
+
+    form = CharacterCreateForm()
+    if form.validate_on_submit():
+        character = Character(
+            user=current_user,
+            name=current_user.username,
+            facebook_id=current_user.keys.first().service_id
+        )
+        form.populate_obj(character)
+        db.session.add(character)
+        db.session.commit()
+        return redirect(url_for('fquest.profile'))
+
     return render_template(
-        'fquest/create.html')
+        'fquest/create.html',
+        form=form)
 
 
 @fquest.route('/canvas/')
