@@ -1,5 +1,9 @@
+from flask_mixer import Mixer
+
+from . import config
 from ..core.tests import FlaskTest
 from .generator import GEN_MONSTERS, GEN_STUFF
+from .models import Character
 
 
 class TestCase(FlaskTest):
@@ -10,6 +14,8 @@ class TestCase(FlaskTest):
         # Create test world
         GEN_MONSTERS(num=100, max_level=20)
         GEN_STUFF(num=100, max_level=20)
+
+        self.mixer = Mixer(self.app)
 
     def test_monster(self):
         from .models import Monster
@@ -26,4 +32,8 @@ class TestCase(FlaskTest):
         self.assertTrue(stuff)
 
     def test_character(self):
-        pass
+        character = self.mixer.blend(Character, sex=self.mixer.random, cls=config.CLASS_GEN)
+        character.role()
+
+        self.assertEqual(character.level, 1)
+        self.assertEqual(character.health, 20)
