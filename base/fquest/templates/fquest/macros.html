@@ -1,0 +1,12 @@
+{%- macro fqfield(field) %}
+    <div class="control-group {% if field.errors %}error{% endif %}">
+        <input
+            class="span3 {% if field.errors %}error{% endif %}"
+            placeholder="{{ field.label.text }}"
+            type="text"
+            name="{{ field.name }}"> 
+        {%- for error in field.errors %}
+            <p class="help-block">{{error}}</p>
+        {%- endfor %}
+    </div>
+{% endmacro %}
