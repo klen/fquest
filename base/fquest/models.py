@@ -1,4 +1,5 @@
 from ..core.models import BaseMixin, db, datetime
+from sqlalchemy.ext.declarative import declared_attr
 
 
 class Inventory(db.Model):
@@ -70,6 +71,11 @@ class Character(db.Model, BaseMixin):
 
     def __repr__(self):
         return '<Character "%s" [%s]>' % (self.name, self.level)
+
+    @declared_attr
+    def inventory(self):
+        assert self
+        return db.relationship("Stuff", secondary='fquest_inventory', backref="characters")
 
 
 class Monster(db.Model, BaseMixin):
