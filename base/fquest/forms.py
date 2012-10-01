@@ -8,7 +8,7 @@ from . import config
 class CharacterCreateForm(Form):
 
     race = SelectField(choices=config.RACE, coerce=int)
-    sex = SelectField(choices=config.SEX, coerce=int)
+    sex = SelectField(choices=config.SEX, coerce=lambda x: bool(int(x)))
     cls = SelectField(choices=config.CLASS, coerce=int, label=_('Character Class'))
     moto = TextField(_('Character moto'))
 
