@@ -120,6 +120,9 @@ class Character(db.Model, BaseMixin):
         )
         db.session.add(event)
 
+        # TODO Make async call
+
+
     def fight(self, monster):
         """ Got fight.
         """

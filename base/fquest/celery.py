@@ -54,4 +54,12 @@ def beat():
     db.session.commit()
 
 
+@celery.task
+def publish(token, ignore_result=True):
+    " Async action publush. "
+    from facepy import GraphAPI, FacepyError
+    graph = GraphAPI(token)
+    graph.post('/me/)
+
+
 # pymode:lint_ignore=E061
