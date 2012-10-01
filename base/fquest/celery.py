@@ -38,6 +38,7 @@ def beat():
     from facepy import GraphAPI, FacepyError
 
     last_synced = cache.get('fquest.last_synced')
+    logger.info('BEAT')
 
     if last_synced:
         characters = Character.query.filter(Character.facebook_synced <= last_synced).limit(10)
