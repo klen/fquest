@@ -16,6 +16,6 @@ def give_exp(facebook_id, exp):
     " This is cheat. "
     from .models import Character
 
-    character = Character.query.filter(facebook_id=facebook_id).first()
+    character = Character.query.filter(Character.facebook_id == facebook_id).first()
     if character:
         character.got_exp(int(exp))
