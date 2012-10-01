@@ -13,13 +13,13 @@
             <h3><img src="http://graph.facebook.com/{{ character.facebook_id }}/picture" alt="alt"/>
                 {{ character.name }}</h3>
             <h4>{{ character.display() }}</h4>
+            <span class="label label-warning">Gold: {{ character.gold }}</span>
+            <span class="label label-success">Win: {{ character.win }}</span>
+            <span class="label label-inverse">Lose: {{ character.lose }}</span>
             <b>Level {{ character.level }}</b>
             <div class="progress progress-striped active">
                 <div class="bar" style="width: 36%;"></div>
             </div>
-            <span class="label label-warning">Gold: {{ character.gold }}</span>
-            <span class="label label-success">Win: {{ character.win }}</span>
-            <span class="label label-inverse">Lose: {{ character.lose }}</span>
             
             <div class="row">
                 <div class="span2">
