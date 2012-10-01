@@ -1,9 +1,8 @@
 # coding: utf-8
-
 from flask import Blueprint, redirect, url_for, render_template, request
 from flask_login import current_user
 from functools import wraps
-from ..ext import cache
+
 from .forms import CharacterCreateForm
 from .models import Character, db, Event
 
@@ -28,7 +27,6 @@ def authenticated(func):
 
 
 @fquest.route('/')
-@cache.cached(timeout=30)
 def index():
     " Facebook Quest Main page. "
 
