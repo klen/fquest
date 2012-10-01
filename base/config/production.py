@@ -37,8 +37,8 @@ SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fq
 # Celery settings
 BROKER_URL = 'redis://localhost:6379/1'
 BEAT_SCHEDULE = timedelta(minutes=1)
-DEBUG = True
-DEBUG_TB_INTERCEPT_REDIRECTS = False
+# DEBUG = True
+# DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 if op.exists('/var/www/smtp'):
     with open('/var/www/smtp') as f:

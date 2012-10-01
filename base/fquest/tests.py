@@ -4,6 +4,7 @@ from . import config
 from ..core.tests import FlaskTest
 from .generator import GEN_MONSTERS, GEN_STUFF
 from .models import Character, db, Event
+from mock import Mock
 
 
 class TestCase(FlaskTest):
@@ -59,10 +60,6 @@ class TestCase(FlaskTest):
 
         db.session.commit()
 
-        self.assertTrue(
-            [character.strenght, character.dexterity, character.intellect, character.luck] >
-            [15, 15, 15, 15]
-        )
         self.assertTrue(character.win)
         self.assertTrue(character.lose)
         self.assertTrue(character.gold)
@@ -70,7 +67,44 @@ class TestCase(FlaskTest):
 
     def test_beat(self):
         from .celery import beat
+        from ..ext import cache
+        from facepy import GraphAPI
+        from sqlalchemy import func
 
-        for _ in xrange(10):
+        GraphAPI.get = Mock(return_value=dict(
+            data=[
+                dict(
+                    id='1243',
+                    type='status',
+                    created_time="2012-10-01T07:45:59+0000",
+                )
+            ]
+        ))
+
+        cache.cache.clear()
+
+        for _ in xrange(20):
             self.mixer.blend(Character)
+
+        self.assertEqual(Event.query.count(), 0)
+
         beat()
+        last_update1 = cache.get('fquest.last_synced')
+
+        GraphAPI.get = Mock(return_value=dict(
+            data=[
+                dict(
+                    id='124356',
+                    type='status',
+                    created_time="2012-10-01T07:45:59+0000",
+                )
+            ]
+        ))
+        beat()
+
+        last_update2 = cache.get('fquest.last_synced')
+        self.assertEqual(Event.query.count(), 11)
+        self.assertTrue(last_update2 > last_update1)
+
+        character = Character.query.order_by(Character.facebook_synced.desc()).first()
+        self.assertTrue(character.facebook_synced > last_update2)
