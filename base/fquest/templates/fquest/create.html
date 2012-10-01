@@ -1,2 +1,25 @@
 {% extends "fquest/base.html" %}
 
+{% block title %}{{ _("Create a character") }}{% endblock %}
+
+{% block fquest_content %}
+    <div class='row'>
+        {% import "bootstrap_wtf.html" as wtf %}
+        {% import "fquest/macros.html" as fquest %}
+
+        <div class='span4 well'>
+            <form method="POST" action="" accept-charset="UTF-8">
+                <legend>
+                    {{ _('Create a character') }}
+                </legend>
+                {{ form.hidden_tag() }}
+                {{ fquest.fqfield(form.moto) }}
+                {{ wtf.horizontal_field(form.sex) }}
+                {{ wtf.horizontal_field(form.race) }}
+                {{ wtf.horizontal_field(form.cls) }}
+                <button class="btn btn-warning" type="submit">{{ _('Sign up for Facebook Quest') }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+

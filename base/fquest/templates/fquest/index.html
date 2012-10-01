@@ -1,2 +1,29 @@
 {% extends "fquest/base.html" %}
 
+{% block fquest_content %}
+
+    <div class="hero-unit">
+        <h2>Zero Quest!</h2>
+        <p>Lazy Facebook RPG</p>
+        <iframe src="https://www.facebook.com/plugins/like.php?href=http://fquest.node42.org" scrolling="no" frameborder="0" style="border:none; width:450px; height:80px"></iframe>
+    </div>
+
+    <div class="row">
+        <div class='span12'>
+            <h1>Player rating</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span4">
+            <h2>Day</h2>
+        </div>
+        <div class="span4">
+            <h2>Week</h2>
+        </div>
+        <div class="span4">
+            <h2>All time</h2>
+        </div>
+    </div>
+    
+{% endblock %}

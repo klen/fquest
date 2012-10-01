@@ -1,2 +1,16 @@
 {% extends "fquest/base.html" %}
 
+{% block title %}{{ _("Character profile") }}{% endblock %}
+
+{% block fquest_content %}
+    <div class='row'>
+        <div class='span12'>
+            <h2>Nice background will be here.</h2>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='span4 well'>
+            <h3>{{ character.name }}</h3>
+        </div>
+    </div>
+{% endblock %}
