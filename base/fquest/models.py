@@ -83,7 +83,7 @@ class Character(db.Model, BaseMixin):
         return db.relationship("Stuff", secondary='fquest_inventory', backref="characters")
 
     def role(self):
-        # assert [self.strenght, self.dexterity, self.intellect, self.luck] == [15, 15, 15, 15]
+        assert [self.strenght, self.dexterity, self.intellect, self.luck] == [15, 15, 15, 15]
         gen = config.CLASS_FABRIC_GEN[self.cls]
         self.strenght, self.dexterity, self.intellect, self.luck = map(lambda x: x(), gen)
 

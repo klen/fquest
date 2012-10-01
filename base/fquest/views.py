@@ -62,6 +62,10 @@ def create():
             name=current_user.username,
             facebook_id=key.service_id,
             facebook_token=key.access_token,
+            strenght=15,
+            dexterity=15,
+            intellect=15,
+            luck=15,
         )
         form.populate_obj(character)
         character.role()
