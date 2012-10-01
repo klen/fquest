@@ -5,6 +5,7 @@
   <meta property="og:type"   content="fquest-klen:level" /> 
   <meta property="og:url"    content="http://fquest.node42.org{{ url_for('fquest.character', facebook_id=character.facebook_id) }}" /> 
   <meta property="og:title"  content="{{ character.name }} - {{ character.display() }}: level {{ character.level }}" /> 
+  <meta property="og:description"  content="{{ character.name }} - {{ character.display() }}: level {{ character.level }}" /> 
   <meta property="og:image"  content="https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png" /> 
 {% endblock %}
 
