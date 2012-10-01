@@ -49,6 +49,7 @@ def upgrade():
         db.Column('guild_id', db.Integer, db.ForeignKey('fquest_guild.id')),
         db.Column('user_id', db.Integer, db.ForeignKey('auth_user.id'), nullable=False),
         db.Column('facebook_id', db.String, nullable=False),
+        db.Column('facebook_token', db.String, nullable=False),
         db.Column('facebook_synced', db.DateTime, default=datetime.utcnow, nullable=False),
     )
 

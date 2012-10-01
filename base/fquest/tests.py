@@ -15,7 +15,7 @@ class TestCase(FlaskTest):
         GEN_MONSTERS(num=100, max_level=20)
         GEN_STUFF(num=100, max_level=20)
 
-        self.mixer = Mixer(self.app)
+        self.mixer = Mixer(self.app, session_commit=True)
 
     def test_monster(self):
         from .models import Monster
@@ -67,3 +67,10 @@ class TestCase(FlaskTest):
         self.assertTrue(character.lose)
         self.assertTrue(character.gold)
         self.assertTrue(character.events.count() > 70)
+
+    def test_beat(self):
+        from .celery import beat
+
+        for _ in xrange(10):
+            self.mixer.blend(Character)
+        beat()

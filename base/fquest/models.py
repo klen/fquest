@@ -68,6 +68,7 @@ class Character(db.Model, BaseMixin):
     user = db.relationship('User', backref=db.backref('characters', lazy='dynamic'))
 
     facebook_id = db.Column(db.String, nullable=False)
+    facebook_token = db.Column(db.String, nullable=False)
     facebook_synced = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def __unicode__(self):

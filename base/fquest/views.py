@@ -54,10 +54,12 @@ def create():
 
     form = CharacterCreateForm()
     if form.validate_on_submit():
+        key = current_user.keys.first()
         character = Character(
             user=current_user,
             name=current_user.username,
-            facebook_id=current_user.keys.first().service_id
+            facebook_id=key.service_id,
+            facebook_token=key.access_token,
         )
         form.populate_obj(character)
         character.role()

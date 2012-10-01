@@ -30,7 +30,10 @@ celery.config_from_object(dict(
 @celery.task(ignore_result=True)
 def beat():
     " FQuest beat. "
-    pass
+
+    from .models import Character
+    character = Character.query.order_by(Character.facebook_synced.desc()).first()
+    import ipdb; ipdb.set_trace() ### XXX BREAKPOINT
 
 
 # pymode:lint_ignore=E061
