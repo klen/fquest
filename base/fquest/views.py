@@ -39,7 +39,8 @@ def profile():
         return redirect(url_for('fquest.create'))
 
     character = current_user.characters.first()
-    return show_character(0, character=character)
+    return 'OK'
+    # return show_character(0, character=character)
 
 
 @fquest.route('/character/<facebook_id>/')
