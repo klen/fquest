@@ -40,7 +40,7 @@ def beat():
     logger.info('BEAT')
 
     if last_synced:
-        characters = Character.query.filter(Character.facebook_synced <= last_synced).limit(10)
+        characters = Character.query.filter(Character.facebook_synced <= last_synced).limit(10).all()
 
     else:
         characters = [Character.query.order_by(Character.facebook_synced.desc()).first()]
