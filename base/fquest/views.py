@@ -59,6 +59,7 @@ def character(facebook_id):
         .order_by(Event.created_at.desc()).paginate(page, per_page=20)
     return render_template(
         'fquest/profile.html',
+        title="%s — %s" % (character.name, character.display()),
         events=events,
         character=character)
 
