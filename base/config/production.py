@@ -38,5 +38,9 @@ SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fq
 BROKER_URL = 'redis://localhost:6379/1'
 BEAT_SCHEDULE = timedelta(minutes=1)
 
+if op.exists('/var/www/smtp'):
+    with open('/var/www/smtp') as f:
+        MAIL_USERNAME, MAIL_PASSWORD = f.read().split(' ')
+
 
 # pymode:lint_ignore=W0614,W404
