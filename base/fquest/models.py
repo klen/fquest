@@ -162,7 +162,8 @@ class Character(db.Model, BaseMixin):
     def publish(self):
         graph = GraphAPI(self.facebook_token)
         try:
-            graph.session.request('POST', '/me/fquest-klen:raised', data=dict(
+            graph.session.request('POST', '%s/me/fquest-klen:raised' % graph.url, data=dict(
+                access_token=self.facebook_token,
                 level="http://fquest.node42.org%s" % url_for('fquest.character', facebook_id=self.facebook_id)
             ))
             # graph.post('/me/fquest-klen:raised', data=dict(
