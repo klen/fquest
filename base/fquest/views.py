@@ -39,14 +39,17 @@ def profile():
         return redirect(url_for('fquest.create'))
 
     character = current_user.characters.first()
-    return 'OK'
-    # return show_character(0, character=character)
+    page = int(request.args.get('page', 0))
+    events = Event.query.filter(Event.character_id == character.id).paginate(page, per_page=20)
+    return render_template(
+        'fquest/profile.html',
+        events=events,
+        character=character)
 
 
 @fquest.route('/character/<facebook_id>/')
-def show_character(facebook_id, character=None):
-    if not character:
-        character = Character.query.filter(Character.facebook_id == facebook_id).first_or_404()
+def character(facebook_id):
+    character = Character.query.filter(Character.facebook_id == facebook_id).first_or_404()
     page = int(request.args.get('page', 0))
     events = Event.query.filter(Event.character_id == character.id).paginate(page, per_page=20)
     return render_template(
