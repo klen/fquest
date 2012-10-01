@@ -12,18 +12,16 @@
         <div class='span4 well'>
             <h3><img src="http://graph.facebook.com/{{ character.facebook_id }}/picture" alt="alt"/>
                 {{ character.name }}</h3>
-            <p>{{ character.display() }}</p>
-            <div class="span4">
-                <h1>Level {{ character.level }}</h1>
-                <span class="pull-right">Expirience</span>
-                <div class="progress progress-striped active">
-                    <div class="bar" style="width: 36%;"></div>
-                </div>
-                <p>
-                    <button class="btn btn-primary disabled" type="button">Format</button>
-                    <button class="btn btn-mini" type="button">Cancel</button>
-                </p>
+            <h4>{{ character.display() }}</h4>
+            <b>Level {{ character.level }}</b>
+            <span class="pull-right">Expirience</span>
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 36%;"></div>
             </div>
+            <p>
+                <button class="btn btn-primary disabled" type="button">Format</button>
+                <button class="btn btn-mini" type="button">Cancel</button>
+            </p>
         </div>
     </div>
     <div class='row'>
