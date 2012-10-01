@@ -23,10 +23,16 @@
             {% endfor %}
         </div>
         <div class="span4">
-            <h2>Day</h2>
+            <h2>Win</h2>
+            {% for character in win %}
+                {{ fquest.render_character(character) }}
+            {% endfor %}
         </div>
         <div class="span4">
-            <h2>Week</h2>
+            <h2>Gold</h2>
+            {% for character in gold %}
+                {{ fquest.render_character(character) }}
+            {% endfor %}
         </div>
     </div>
     

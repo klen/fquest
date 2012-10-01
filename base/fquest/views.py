@@ -3,6 +3,7 @@
 from flask import Blueprint, redirect, url_for, render_template, request
 from flask_login import current_user
 from functools import wraps
+from ..ext import cache
 from .forms import CharacterCreateForm
 from .models import Character, db, Event
 
@@ -27,11 +28,14 @@ def authenticated(func):
 
 
 @fquest.route('/')
+@cache.cached(timeout=30)
 def index():
     " Facebook Quest Main page. "
 
     top = Character.query.order_by(Character.exp.desc()).limit(10).all()
-    return render_template('fquest/index.html', top=top)
+    win = Character.query.order_by(Character.win.desc()).limit(10).all()
+    gold = Character.query.order_by(Character.gold.desc()).limit(10).all()
+    return render_template('fquest/index.html', top=top, win=win, gold=gold)
 
 
 @fquest.route('/profile/')
