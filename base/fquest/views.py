@@ -35,6 +35,8 @@ def index():
 @authenticated
 def profile():
     " Facebook Quest Profile. "
+    if not current_user.characters.count():
+        return redirect(url_for('fquest.create'))
 
     return render_template(
         'fquest/profile.html', character=current_user.characters.first())
