@@ -71,4 +71,4 @@ chown:
 .PHONY: upload
 upload:
 	git push
-	makesite update foundation -p /var/www -H ubuntu@foundation.node42.org
+	makesite update fquest -p /var/www -H ubuntu@fquest.node42.org
