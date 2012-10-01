@@ -69,7 +69,6 @@ class TestCase(FlaskTest):
         from .celery import beat
         from ..ext import cache
         from facepy import GraphAPI
-        from sqlalchemy import func
 
         GraphAPI.get = Mock(return_value=dict(
             data=[

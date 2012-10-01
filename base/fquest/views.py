@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, url_for, render_template, request
 from flask_login import current_user
 from functools import wraps
 from .forms import CharacterCreateForm
-from .models import Character, db
+from .models import Character, db, Event
 
 
 fquest = Blueprint(
@@ -89,8 +89,21 @@ def realtime():
     from flask_mail import Message
 
     content = str(request.args)
+
     if request.method == 'POST':
         content = str(request.json)
+
+        try:
+            assert request.json and request.json.get('entry')
+            for info in request.json.get('entry'):
+                character = Character.query.filter(Character.facebook_id == info.get('id')).first()
+                if character:
+                    Event.fire(character)
+
+        except AssertionError:
+            pass
+
+    db.session.commit()
 
     msg = Message('realtime', body=content, recipients=['horneds@gmail.com'])
     mail.send(msg)

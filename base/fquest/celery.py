@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import time
+
 from datetime import datetime
 
 from celery import Celery
@@ -46,26 +46,10 @@ def beat():
     else:
         characters = [Character.query.order_by(Character.facebook_synced.desc()).first()]
 
-    cache.set('fquest.last_synced', datetime.now())
+    cache.set('fquest.last_synced', datetime.now(), timeout=300)
 
     for character in characters:
-        graph = GraphAPI(oauth_token=character.facebook_token)
-
-        # Create timestamp since
-        since = int(time.mktime(character.facebook_synced.timetuple()))
-        uri = '/me/feed?fields=type,name&since=%s' % since
-
-        try:
-            logger.info('Call API: %s' % uri)
-            feed = graph.get(uri)
-            assert 'data' in feed and feed['data']
-        except (FacepyError, AssertionError), e:
-            logger.error(e)
-
-        for info in feed['data']:
-            Event.fight(character)
-
-        character.facebook_synced = datetime.now()
+        Event.fire(character)
 
     db.session.commit()
 

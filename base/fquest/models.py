@@ -1,3 +1,7 @@
+import time
+
+from facepy import GraphAPI, FacepyError
+from flask import current_app
 from random import randint
 from sqlalchemy import func
 from sqlalchemy.ext.declarative import declared_attr
@@ -70,6 +74,12 @@ class Character(db.Model, BaseMixin):
     facebook_id = db.Column(db.String, nullable=False)
     facebook_token = db.Column(db.String, nullable=False)
     facebook_synced = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def display(self):
+        return ' '.join((
+            config.RACE_DISPLAY.get(self.race),
+            config.CLASS_DISPLAY.get(self.cls),
+        ))
 
     def __unicode__(self):
         return self.name
@@ -229,3 +239,20 @@ class Event(db.Model, BaseMixin):
         """ Generate fight.
         """
         character.fight(monster or Monster.meet_character(character))
+
+    @classmethod
+    def fire(cls, character):
+        graph = GraphAPI(oauth_token=character.facebook_token)
+        since = int(time.mktime(character.facebook_synced.timetuple()))
+        uri = '/me/feed?fields=type,name&since=%s' % since
+        try:
+            current_app.logger.info('Call API: %s' % uri)
+            feed = graph.get(uri)
+            assert 'data' in feed and feed['data']
+        except (FacepyError, AssertionError), e:
+            current_app.logger.error(e)
+
+        for info in feed['data']:
+            cls.fight(character)
+
+        character.facebook_synced = datetime.now()
