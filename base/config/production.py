@@ -34,7 +34,7 @@ CACHE_KEY_PREFIX = 'poliglot'
 # Database settings
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fquest_master'
 # Celery settings
-BROKER_URL = 'redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/1'
 
 
 # pymode:lint_ignore=W0614,W404
