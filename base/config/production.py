@@ -35,7 +35,7 @@ CACHE_KEY_PREFIX = 'poliglot'
 # Database settings
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fquest_master'
 # Celery settings
-BROKER_URL = 'redis://localhost:6379/1'
+BROKER_URL = 'redis://localhost:6379/2'
 BEAT_SCHEDULE = timedelta(minutes=1)
 # DEBUG = True
 # DEBUG_TB_INTERCEPT_REDIRECTS = False
