@@ -11,6 +11,11 @@ ADMINS = frozenset([MAIL_USERNAME])
 # -----------------
 COLLECT_STATIC_ROOT = op.join(op.dirname(ROOTDIR), 'static')
 
+# dealer
+DEALER_PARAMS = dict(
+    backends=('git', 'mercurial', 'simple', 'null')
+)
+
 # FQUEST settings
 # ----------
 AUTH_LOGIN_VIEW = 'fquest.index'
@@ -22,11 +27,10 @@ OAUTH_FACEBOOK = dict(
         scope="user_status,user_likes,user_activities,user_questions,user_events,user_videos,user_groups,user_relationships,user_notes,user_photos,offline_access,publish_actions"
     )
 )
-
-# dealer
-DEALER_PARAMS = dict(
-    backends=('git', 'mercurial', 'simple', 'null')
-)
+# Cache
+CACHE_TYPE = 'redis'
+CACHE_REDIS_HOST = 'localhost'
+CACHE_KEY_PREFIX = 'poliglot'
 
 
 # pymode:lint_ignore=W0614,W404
