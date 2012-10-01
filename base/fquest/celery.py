@@ -49,9 +49,9 @@ def beat():
     cache.set('fquest.last_synced', datetime.now(), timeout=300)
 
     for character in characters:
-        Event.fire(character)
         try:
-            db.session.commit()
+            if Event.fire(character):
+                db.session.commit()
         except (IntegrityError, DataError):
             db.session.rollback()
 
