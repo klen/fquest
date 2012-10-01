@@ -17,7 +17,7 @@ DEALER_PARAMS = dict(
 )
 
 # FQUEST settings
-# ----------
+# ---------------
 AUTH_LOGIN_VIEW = 'fquest.index'
 AUTH_PROFILE_VIEW = 'fquest.profile'
 OAUTH_FACEBOOK = dict(
@@ -31,6 +31,8 @@ OAUTH_FACEBOOK = dict(
 CACHE_TYPE = 'redis'
 CACHE_REDIS_HOST = 'localhost'
 CACHE_KEY_PREFIX = 'poliglot'
+# Database settings
+SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fquest_master'
 
 
 # pymode:lint_ignore=W0614,W404
