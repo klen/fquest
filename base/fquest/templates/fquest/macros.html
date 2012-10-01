@@ -39,11 +39,12 @@
 {% macro render_character(character) %}
     <div class="row">
         <div class="span1">
-            <a href="{{ url_for('fquest.character', facebook_id=character.facebook_id) }}" class="thumbnail"><img src="http://graph.facebook.com/{{ character.facebook_id }}/picture" alt=""></a></div>
+            <a href="http://facebook.com/{{ character.facebook_id }}" class="thumbnail"><img src="http://graph.facebook.com/{{ character.facebook_id }}/picture" alt=""></a></div>
             <div class="span3">
-                <p>{{ character.name }}</p>
+                <p><a href="{{ url_for('fquest.character', facebook_id=character.facebook_id) }}">{{ character.name }}</a></p>
                 <strong><p>{{ character.display() }}</p></strong>
                 <span class=" badge badge-warning">Exp: {{ character.exp }}</span>
 		</div>
+        <br/>
     </div>
 {% endmacro %}
