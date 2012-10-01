@@ -1,6 +1,7 @@
 from __future__ import absolute_import
+from sqlalchemy.exc import IntegrityError, DataError
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from celery import Celery
 from celery.utils.log import get_task_logger
@@ -40,7 +41,7 @@ def beat():
     logger.info('BEAT')
 
     if last_synced:
-        characters = Character.query.filter(Character.facebook_synced <= last_synced).limit(10).all()
+        characters = Character.query.filter(Character.facebook_synced <= last_synced - timedelta(minutes=10)).limit(10).all()
 
     else:
         characters = [Character.query.order_by(Character.facebook_synced.desc()).first()]
@@ -49,8 +50,10 @@ def beat():
 
     for character in characters:
         Event.fire(character)
-
-    db.session.commit()
+        try:
+            db.session.commit()
+        except (IntegrityError, DataError):
+            db.session.rollback()
 
 
 @celery.task
