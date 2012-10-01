@@ -1,12 +1,12 @@
+from dealer.contrib.flask import Dealer
 from flask import request
+from flask_cache import Cache
 from flask_collect import Collect
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_mail import Mail
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
 from flaskext.babel import Babel
-from flaskext.cache import Cache
-from dealer.contrib.flask import Dealer
 
 from .app import create_app
 
