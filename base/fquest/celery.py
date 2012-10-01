@@ -60,11 +60,13 @@ def publish(token, level, ignore_result=True):
 
     graph = GraphAPI(token)
     try:
+        logger.info(level)
+        logger.info(token)
         graph.post('/me/fquest-klen:raised', data=dict(
             level=level
         ))
-    except FacepyError:
-        pass
+    except FacepyError, e:
+        logger.error(e)
 
 
 # pymode:lint_ignore=E061
