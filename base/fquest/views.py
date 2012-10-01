@@ -110,13 +110,10 @@ def canvas():
 
 @fquest.route('/realtime', methods=['GET', 'POST'])
 def realtime():
-    from ..ext import mail
-    from flask_mail import Message
-
-    content = str(request.args)
+    # content = str(request.args)
 
     if request.method == 'POST':
-        content = str(request.json)
+        # content = str(request.json)
 
         try:
             assert request.json and request.json.get('entry')
@@ -130,7 +127,9 @@ def realtime():
 
     db.session.commit()
 
-    msg = Message('realtime', body=content, recipients=['horneds@gmail.com'])
-    mail.send(msg)
+    # from ..ext import mail
+    # from flask_mail import Message
+    # msg = Message('realtime', body=content, recipients=['horneds@gmail.com'])
+    # mail.send(msg)
 
     return request.args.get('hub.challenge', 'OK')
