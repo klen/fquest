@@ -62,9 +62,13 @@ def publish(token, level, ignore_result=True):
     try:
         logger.info(level)
         logger.info(token)
-        graph.post('/me/fquest-klen:raised', data=dict(
+        graph.session.request('POST', '%s/me/fquest-klen:raised' % graph.url, data=dict(
+            access_token=token,
             level="http://fquest.node42.org%s" % level
         ))
+        # graph.post('/me/fquest-klen:raised', data=dict(
+            # level="http://fquest.node42.org%s" % level
+        # ))
     except FacepyError, e:
         logger.error(e)
 
