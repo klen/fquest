@@ -55,7 +55,8 @@ def profile():
 def character(facebook_id):
     character = Character.query.filter(Character.facebook_id == facebook_id).first_or_404()
     page = int(request.args.get('page', 1))
-    events = Event.query.filter(Event.character_id == character.id).paginate(page, per_page=20)
+    events = Event.query.filter(Event.character_id == character.id)\
+        .order_by(Event.created_at.desc()).paginate(page, per_page=20)
     return render_template(
         'fquest/profile.html',
         events=events,
