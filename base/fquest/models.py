@@ -1,4 +1,5 @@
 from random import randint
+from sqlalchemy import func
 from sqlalchemy.ext.declarative import declared_attr
 
 from . import config
@@ -108,6 +109,38 @@ class Character(db.Model, BaseMixin):
         )
         db.session.add(event)
 
+    def fight(self, monster):
+        """ Got fight.
+        """
+        skill = max(1, 4 + (self.level - monster.level))
+        dice = randint(1, 6)
+        event = Event(character=self)
+        context = dict(
+            character=self.name,
+            target=monster.name,
+        )
+
+        # Character won
+        if dice < skill:
+            self.win += 1
+            exp, gold = monster.get_stuff(self)
+            self.got_exp(exp)
+            self.gold += gold
+            event.exp = exp
+            event.gold = gold
+            event.message = config.WIN_PHRASE_GEN() % context
+
+        # Character lost
+        elif dice > skill:
+            self.lose += 1
+            event.message = config.LOSE_PHRASE_GEN() % context
+
+        # Character escaped
+        else:
+            event.message = config.ESCAPE_PHRASE_GEN() % context
+
+        db.session.add(event)
+
 
 class Monster(db.Model, BaseMixin):
 
@@ -122,6 +155,23 @@ class Monster(db.Model, BaseMixin):
 
     def __repr__(self):
         return '<Monster "%s" [%s]>' % (self.name, self.level)
+
+    @classmethod
+    def meet_character(cls, character):
+        """ Get monster for character.
+        """
+        return cls.query.filter(
+            cls.level >= character.level - 2,
+            cls.level <= character.level + 2
+        ).order_by(func.random()).first()
+
+    def get_stuff(self, character):
+        """ Character has loot fom this monster.
+        """
+        skill = max(1, 3 + (character.level - self.level))
+        exp = randint(self.level * (5 - skill), self.level * (7 - skill))
+        gold = randint(0, randint(self.level * (5 - skill), self.level * (7 - skill)) / 2)
+        return exp, gold
 
 
 class Stuff(db.Model, BaseMixin):
@@ -172,3 +222,9 @@ class Event(db.Model, BaseMixin):
 
     def __repr__(self):
         return '<Event "%s">' % self.message
+
+    @classmethod
+    def fight(cls, character, monster=None):
+        """ Generate fight.
+        """
+        character.fight(monster or Monster.meet_character(character))

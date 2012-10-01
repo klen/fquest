@@ -24,6 +24,14 @@ class TestCase(FlaskTest):
         monster = Monster.query.order_by(func.random()).first()
         self.assertTrue(monster)
 
+        character = self.mixer.blend(Character)
+
+        monster = Monster.meet_character(character)
+        self.assertTrue(abs(monster.level - character.level) <= 2)
+
+        exp, gold = monster.get_stuff(character)
+        self.assertTrue(exp and gold)
+
     def test_stuff(self):
         from .models import Stuff
         from sqlalchemy import func
@@ -45,3 +53,17 @@ class TestCase(FlaskTest):
         db.session.commit()
         event = character.events.order_by(Event.id.desc()).first()
         self.assertEqual(event.level, 3)
+
+        for _ in xrange(70):
+            Event.fight(character)
+
+        db.session.commit()
+
+        self.assertTrue(
+            [character.strenght, character.dexterity, character.intellect, character.luck] >
+            [15, 15, 15, 15]
+        )
+        self.assertTrue(character.win)
+        self.assertTrue(character.lose)
+        self.assertTrue(character.gold)
+        self.assertTrue(character.events.count() > 70)
