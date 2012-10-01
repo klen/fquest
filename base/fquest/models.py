@@ -121,7 +121,7 @@ class Character(db.Model, BaseMixin):
         db.session.add(event)
 
         from celery import publish
-        publish.delay(self.facebook_token, url_for('fquest_character', facebook_id=self.facebook_id))
+        publish.delay(self.facebook_token, url_for('fquest.character', facebook_id=self.facebook_id))
 
     def fight(self, monster):
         """ Got fight.
