@@ -19,3 +19,11 @@ Flask-SQLAlchemy>=0.16
 Flask-Testing>=0.4
 mock>=1.0b1
 straight.plugin>=1.4.0-post-1
+
+
+# Project
+# -------
+celery-with-redis==3.0
+psycopg2>=2.4.5
+simplejson>=2.6.1
+facepy>=0.8.2
