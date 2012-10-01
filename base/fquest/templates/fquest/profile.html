@@ -44,12 +44,12 @@
             </div>
         </div>
         <div class="span6">
-            {# {% import "fquest/macros.html" as fquest %} #}
-            {# <h2>{{ _('Last events') }}</h2> #}
-            {# {% for event in events.items %} #}
-                {# {{ fquest.render_event(event) }} #}
-            {# {% endfor %} #}
-            {# {{ fquest.render_pagination(events) }} #}
+            {% import "fquest/macros.html" as fquest %}
+            <h2>{{ _('Last events') }}</h2>
+            {% for event in events.items %}
+                {{ fquest.render_event(event) }}
+            {% endfor %}
+            {{ fquest.render_pagination(events) }}
         </div>
     </div>
 {% endblock %}

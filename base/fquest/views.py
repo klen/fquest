@@ -43,7 +43,7 @@ def profile():
     events = Event.query.filter(Event.character_id == character.id).paginate(page, per_page=20)
     return render_template(
         'fquest/profile.html',
-        # events=events,
+        events=events,
         character=character)
 
 
