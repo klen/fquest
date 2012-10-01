@@ -32,7 +32,7 @@ def index():
 
     top = Character.query.order_by(Character.exp.desc()).limit(10).all(),
 
-    return render_template('fquest/index.html', top)
+    return render_template('fquest/index.html', top=top)
 
 
 @fquest.route('/profile/')
