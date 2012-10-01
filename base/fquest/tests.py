@@ -30,7 +30,7 @@ class TestCase(FlaskTest):
         self.assertTrue(abs(monster.level - character.level) <= 2)
 
         exp, gold = monster.get_stuff(character)
-        self.assertTrue(exp and gold)
+        self.assertTrue(exp is not None and gold is not None)
 
     def test_stuff(self):
         from .models import Stuff
