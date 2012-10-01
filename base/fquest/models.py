@@ -1,7 +1,7 @@
 import time
 
 from facepy import GraphAPI, FacepyError
-from flask import current_app
+from flask import current_app, url_for
 from random import randint
 from sqlalchemy import func
 from sqlalchemy.ext.declarative import declared_attr
@@ -120,8 +120,8 @@ class Character(db.Model, BaseMixin):
         )
         db.session.add(event)
 
-        # TODO Make async call
-
+        from celery import publish
+        publish.delay(self.facebook_token, url_for('fquest_character', facebook_id=self.facebook_id))
 
     def fight(self, monster):
         """ Got fight.

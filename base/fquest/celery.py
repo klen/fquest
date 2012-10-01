@@ -35,7 +35,6 @@ def beat():
 
     from .models import Character, db, Event
     from ..ext import cache
-    from facepy import GraphAPI, FacepyError
 
     last_synced = cache.get('fquest.last_synced')
     logger.info('BEAT')
@@ -55,11 +54,17 @@ def beat():
 
 
 @celery.task
-def publish(token, ignore_result=True):
+def publish(token, level, ignore_result=True):
     " Async action publush. "
     from facepy import GraphAPI, FacepyError
+
     graph = GraphAPI(token)
-    graph.post('/me/)
+    try:
+        graph.post('/me/fquest-klen:raised', data=dict(
+            level=level
+        ))
+    except FacepyError:
+        pass
 
 
 # pymode:lint_ignore=E061
