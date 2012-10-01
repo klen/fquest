@@ -60,6 +60,7 @@ def create():
             facebook_id=current_user.keys.first().service_id
         )
         form.populate_obj(character)
+        character.role()
         db.session.add(character)
         db.session.commit()
         return redirect(url_for('fquest.profile'))

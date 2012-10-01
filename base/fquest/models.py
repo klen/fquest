@@ -1,3 +1,4 @@
+from random import randint
 from sqlalchemy.ext.declarative import declared_attr
 
 from . import config
@@ -83,6 +84,29 @@ class Character(db.Model, BaseMixin):
         assert [self.strenght, self.dexterity, self.intellect, self.luck] == [15, 15, 15, 15]
         gen = config.CLASS_FABRIC_GEN[self.cls]
         self.strenght, self.dexterity, self.intellect, self.luck = map(lambda x: x(), gen)
+
+    def got_exp(self, exp):
+        self.exp += exp
+        while config.LEVELS[self.level] <= self.exp:
+            self.levelup()
+
+    def levelup(self):
+        self.level += 1
+
+        # Update attributes
+        self.health += randint(20, 25)
+        self.strenght += randint(0, 2)
+        self.dexterity += randint(0, 2)
+        self.intellect += randint(0, 2)
+        self.luck += randint(0, 2)
+
+        # Create event
+        event = Event(
+            character=self,
+            level=self.level,
+            message=config.LEVEL_PHRASE_GEN() % dict(character=self.name, level=self.level),
+        )
+        db.session.add(event)
 
 
 class Monster(db.Model, BaseMixin):

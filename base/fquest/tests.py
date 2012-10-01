@@ -3,7 +3,7 @@ from flask_mixer import Mixer
 from . import config
 from ..core.tests import FlaskTest
 from .generator import GEN_MONSTERS, GEN_STUFF
-from .models import Character
+from .models import Character, db, Event
 
 
 class TestCase(FlaskTest):
@@ -37,3 +37,11 @@ class TestCase(FlaskTest):
 
         self.assertEqual(character.level, 1)
         self.assertEqual(character.health, 20)
+
+        character.got_exp(150)
+        self.assertEqual(character.level, 3)
+        self.assertTrue(character.health >= 60)
+
+        db.session.commit()
+        event = character.events.order_by(Event.id.desc()).first()
+        self.assertEqual(event.level, 3)
