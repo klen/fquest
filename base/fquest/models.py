@@ -159,6 +159,15 @@ class Character(db.Model, BaseMixin):
 
         db.session.add(event)
 
+    def publish(self):
+        graph = GraphAPI(self.facebook_token)
+        try:
+            graph.post('/me/fquest-klen:raised', data=dict(
+                level="http://fquest.node42.org%s" % url_for('fquest.character', facebook_id=self.facebook_id)
+            ))
+        except FacepyError, e:
+            current_app.logger.error(e)
+
 
 class Monster(db.Model, BaseMixin):
 
