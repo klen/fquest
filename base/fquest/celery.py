@@ -34,7 +34,7 @@ def beat():
     from .models import Character
     from ..ext import cache
 
-    last_synced = cache.get()
+    last_synced = cache.get('fquest.last_synced')
     character = Character.query.order_by(Character.facebook_synced.desc()).first()
 
 
