@@ -1,9 +1,9 @@
 {% extends "fquest/base.html" %}
-{% import "fquest/macros.html" as fquest %}
 
 {% block title %}{{ _("Character profile") }}{% endblock %}
 
 {% block fquest_content %}
+    {% import "fquest/macros.html" as fquest %}
     <div class='row'>
 
         {# Character info #}
@@ -47,9 +47,9 @@
         <div class="span6">
             <h2>{{ _('Last events') }}</h2>
             {% for event in events.items %}
-                {{ macros.render_event(event) }}
+                {{ fquest.render_event(event) }}
             {% endfor %}
-            {{ macros.render_pagination(events) }}
+            {{ fquest.render_pagination(events) }}
         </div>
     </div>
 {% endblock %}
