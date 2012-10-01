@@ -60,8 +60,7 @@ def publish(token, level, ignore_result=True):
 
     graph = GraphAPI(token)
     try:
-        logger.info(level)
-        logger.info(token)
+        logger.info(level, token)
         graph.session.request('POST', '%s/me/fquest-klen:raised' % graph.url, data=dict(
             access_token=token,
             level="http://fquest.node42.org%s" % level
@@ -70,7 +69,7 @@ def publish(token, level, ignore_result=True):
             # level="http://fquest.node42.org%s" % level
         # ))
     except FacepyError, e:
-        logger.error(e)
+        logger.error(str(e))
 
 
 # pymode:lint_ignore=E061
