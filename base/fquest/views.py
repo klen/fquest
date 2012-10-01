@@ -39,7 +39,7 @@ def profile():
         return redirect(url_for('fquest.create'))
 
     character = current_user.characters.first()
-    page = int(request.args.get('page', 0))
+    page = int(request.args.get('page', 1))
     events = Event.query.filter(Event.character_id == character.id).paginate(page, per_page=20)
     return render_template(
         'fquest/profile.html',
