@@ -14,8 +14,10 @@ def create_world():
 @manager.command
 def give_exp(facebook_id, exp):
     " This is cheat. "
-    from .models import Character
+    from .models import Character, db
 
     character = Character.query.filter(Character.facebook_id == facebook_id).first()
     if character:
         character.got_exp(int(exp))
+
+    db.session.commit()
