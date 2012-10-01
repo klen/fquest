@@ -1,0 +1,73 @@
+{% extends "bootstrap_responsive.html" %}
+
+{% block html_attribs %}
+    {{ super() }}
+    prefix="og: http://ogp.me/ns#fquest-klen: http://ogp.me/ns/fb/fquest-klen#"
+{% endblock %}
+
+{%- block meta -%}
+    {{ super() }}
+    <meta property="fb:app_id" content="{{ config.get('OAUTH_FACEBOOK').get('consumer_key') }}">
+    <meta property="og:url" content="{{ request.base_url }}"> 
+    <meta property="og:title" content="{{ title or _('ZeroQuest') }}"> 
+    <meta property="og:image" content="{{ url_for('fquest.static', filename='fquest.png') }}">
+    <meta property="og:description" content="{{ _('Lazy Facebook RPG') }}"/>
+{% endblock %}
+
+{% block style %}
+    <link href="{{ url_for('fquest.static', filename='bootstrap.min.css') }}?{{REVISION}}" rel="stylesheet">
+    <link href="{{'css/bootstrap-responsive.css'|bootstrap_find_resource}}?{{REVISION}}" rel="stylesheet">
+    <style type="text/css" media="screen">
+        body { margin-top: 50px; }
+    </style>
+{%- endblock %}
+
+{%- block favicons %}
+    <link rel="shortcut icon" href="{{ url_for('fquest.static', filename='fquest.ico') }}" />
+{%- endblock %}
+
+{% block title %}{{ title or 'Facebook Quest' }}{% endblock %}
+
+{% block body_content %}
+    {# {% include "fquest/sdk.html" %} #}
+
+    {# NAVBAR #}
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/"><img src="{{ url_for('fquest.static', filename='fquest.png') }}"
+                    style="width:35px;margin:-5px 5px 0 0"
+                    alt="fquest logo"/>Facebook Quest</a>
+                <div class="nav-collapse">
+                    <ul class="nav pull-right">
+                        {% if current_user and current_user.is_authenticated() %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.username }}<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                {% if current_user.permission('admin') %}
+                                    <li><a href="{{ url_for('admin.index') }}">{{ _('Admin') }}</a></li>
+                                {% endif %}
+                                <li><a href="{{ url_for('fquest.profile') }}">{{ _('Profile') }}</a></li>
+                                <li><a href="{{ url_for('auth.logout') }}">{{ _('Logout') }}</a></li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{{ url_for('oauth_facebook_login') }}?next={{ url_for('fquest.profile') }}" ><img src="http://favicon.yandex.ru/favicon/facebook.com" alt="facebook"/> login</a>
+                        </li>
+                    {# <li> #}
+                            {# <div class="fb-login-button" scope="user_likes,user_status">{{ _('Login with Facebook') }}</div> #}
+                        {# </li> #}
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='container'>
+        {% block fquest_content %}{% endblock %}
+    </div>
+    
+{% endblock %}
+
