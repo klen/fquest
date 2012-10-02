@@ -5,6 +5,7 @@ from os import path as op
 from datetime import timedelta
 
 
+MODE = 'production'
 SECRET_KEY = 'SecretKeyForSessionSigning'
 ADMINS = MAIL_USERNAME and [MAIL_USERNAME] or None
 
@@ -46,5 +47,6 @@ if op.exists('/var/www/smtp'):
         MAIL_USERNAME, MAIL_PASSWORD = f.read().strip().split(' ')
     ADMINS = [MAIL_USERNAME]
 
+logging.info("Production settings loaded.")
 
 # pymode:lint_ignore=W0614,W404
