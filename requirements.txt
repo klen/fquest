@@ -1,6 +1,6 @@
 # Flask template
 # --------------
-alembic>=0.3.6
+alembic>=0.4.0
 dealer>=0.1.8
 Flask>=0.9
 Flask-Admin>=1.0.2
@@ -24,6 +24,6 @@ straight.plugin>=1.4.0-post-1
 # Project
 # -------
 celery-with-redis==3.0
+facepy>=0.8.2
 psycopg2>=2.4.5
 simplejson>=2.6.1
-facepy>=0.8.2

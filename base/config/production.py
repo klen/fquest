@@ -6,7 +6,7 @@ from datetime import timedelta
 
 
 SECRET_KEY = 'SecretKeyForSessionSigning'
-ADMINS = frozenset([MAIL_USERNAME])
+ADMINS = MAIL_USERNAME and [MAIL_USERNAME] or None
 
 # flask.ext.collect
 # -----------------
@@ -28,17 +28,18 @@ OAUTH_FACEBOOK = dict(
         scope="user_status,user_likes,user_activities,user_questions,user_events,user_videos,user_groups,user_relationships,user_notes,user_photos,offline_access,publish_actions"
     )
 )
+
 # Cache
 CACHE_TYPE = 'redis'
 CACHE_REDIS_HOST = 'localhost'
 CACHE_KEY_PREFIX = 'poliglot'
+
 # Database settings
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://fquest:fquest@localhost:5432/fquest_master'
+
 # Celery settings
 BROKER_URL = 'redis://localhost:6379/2'
 BEAT_SCHEDULE = timedelta(minutes=1)
-# DEBUG = True
-# DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 if op.exists('/var/www/smtp'):
     with open('/var/www/smtp') as f:
